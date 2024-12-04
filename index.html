@@ -6,26 +6,41 @@
 <body>
     <iframe src="https://aboobot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="ABOOBOT"></iframe>
     <script>
-        // Detect DevTools using performance
-        let start = performance.now();
-        debugger;
-        let end = performance.now();
+        // Detect DevTools
+        let devtools = function() {};
+        devtools.toString = function() {
+            detectDevTools();
+            return 'devtools';
+        }
+        console.log('%c', devtools);
 
-        if (end - start > 100) {
-            // DevTools is likely open
-            window.location.href = "about:blank";
+        // Function to detect if DevTools is open
+        function detectDevTools() {
+            if (window.devtools.isOpen) {
+                window.location.href = "about:blank"; // Redirect or take other action
+            }
         }
 
-        // Continuous monitoring
+        // Check window size
         setInterval(function() {
-            let startTime = performance.now();
-            debugger;
-            let endTime = performance.now();
-            
-            if (endTime - startTime > 100) {
-                window.location.href = "about:blank";
+            const widthThreshold = window.outerWidth - window.innerWidth > 160;
+            const heightThreshold = window.outerHeight - window.innerHeight > 160;
+            if (widthThreshold || heightThreshold) {
+                document.body.innerHTML = 'DevTools is not allowed!';
+                // or window.location.href = "about:blank";
             }
         }, 1000);
+
+        // Disable console
+        function disableConsole() {
+            Object.defineProperty(window, 'console', {
+                value: undefined,
+                writable: false
+            });
+        }
+        
+        // Clear console
+        console.clear();
     </script>
 </body>
 </html>
