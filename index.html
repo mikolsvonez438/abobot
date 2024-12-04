@@ -6,40 +6,26 @@
 <body>
     <iframe src="https://aboobot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="ABOOBOT"></iframe>
     <script>
-        function checkDevTools() {
-            let checkStatus;
-            const regexp = /./;
-            regexp.toString = function() {
-                checkStatus = 'on';
-                return 'regexp';
-            }
+        // Detect DevTools using performance
+        let start = performance.now();
+        debugger;
+        let end = performance.now();
 
-            console.log(regexp);
-
-            if (checkStatus === 'on') {
-                // DevTools is open
-                document.body.innerHTML = '';
-                window.location.href = 'about:blank';
-            }
+        if (end - start > 100) {
+            // DevTools is likely open
+            window.location.href = "about:blank";
         }
 
-        // Run check periodically
-        setInterval(checkDevTools, 1000);
-
-        // Additional protection
-        (function() {
-            'use strict';
+        // Continuous monitoring
+        setInterval(function() {
+            let startTime = performance.now();
+            debugger;
+            let endTime = performance.now();
             
-            const log = console.log;
-            const warn = console.warn;
-            const error = console.error;
-            const info = console.info;
-
-            console.log = function() {};
-            console.warn = function() {};
-            console.error = function() {};
-            console.info = function() {};
-        })();
+            if (endTime - startTime > 100) {
+                window.location.href = "about:blank";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
