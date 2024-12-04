@@ -5,5 +5,41 @@
 </head>
 <body>
     <iframe src="https://aboobot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="ABOOBOT"></iframe>
+    <script>
+        function checkDevTools() {
+            let checkStatus;
+            const regexp = /./;
+            regexp.toString = function() {
+                checkStatus = 'on';
+                return 'regexp';
+            }
+
+            console.log(regexp);
+
+            if (checkStatus === 'on') {
+                // DevTools is open
+                document.body.innerHTML = '';
+                window.location.href = 'about:blank';
+            }
+        }
+
+        // Run check periodically
+        setInterval(checkDevTools, 1000);
+
+        // Additional protection
+        (function() {
+            'use strict';
+            
+            const log = console.log;
+            const warn = console.warn;
+            const error = console.error;
+            const info = console.info;
+
+            console.log = function() {};
+            console.warn = function() {};
+            console.error = function() {};
+            console.info = function() {};
+        })();
+    </script>
 </body>
 </html>
