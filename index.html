@@ -6,6 +6,14 @@
 <body>
     <iframe src="https://aboobot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="ABOOBOT"></iframe>
     <script>
+        document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && 
+        (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73)) {
+        e.preventDefault();
+    }
+});
+
+        
         // Detect DevTools
         let devtools = function() {};
         devtools.toString = function() {
