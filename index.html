@@ -103,93 +103,10 @@
     </div>
 
     <div id="mainContent">
-        <iframe 
-            src="https://labubot-24328.chipp.ai" 
-            height="800px" 
-            width="100%" 
-            frameborder="0" 
-            title="LABUBOT"
-            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-            referrerpolicy="no-referrer"
-            loading="lazy"
-            scrolling="auto"
-            oncontextmenu="return false;"
-        ></iframe>
+        <iframe src="https://labubot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="LABUBOT"></iframe>
     </div>
 
     <script>
-        // pang iFrame
-        function protectIframe() {
-            const iframe = document.querySelector('iframe');
-            
-            // Prevent iframe manipulation
-            iframe.addEventListener('load', function() {
-                try {
-                    // Prevent access to iframe content from parent
-                    const iframeContent = iframe.contentWindow;
-                    if(iframeContent) {
-                        iframeContent.addEventListener('keydown', function(e) {
-                            if (e.ctrlKey || e.keyCode === 123) {
-                                e.preventDefault();
-                                return false;
-                            }
-                        });
-                    }
-                } catch(e) {
-                    console.error('Cannot access iframe content due to same-origin policy');
-                }
-            });
-
-            // Prevent dragging the iframe
-            iframe.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // Monitor iframe state
-            setInterval(function() {
-                if(!document.contains(iframe)) {
-                    location.reload();
-                }
-            }, 1000);
-        }
-
-        // Initialize all protections
-        window.onload = function() {
-            initializeProtection();
-            protectIframe();
-        };
-
-        // Prevent iframe from being modified
-        Object.defineProperty(HTMLIFrameElement.prototype, 'contentWindow', {
-            get: function() {
-                try {
-                    return window.top;
-                } catch(e) {
-                    return null;
-                }
-            }
-        });
-
-        // Prevent iframe from being removed from DOM
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if(mutation.removedNodes.length > 0) {
-                    mutation.removedNodes.forEach(function(node) {
-                        if(node.nodeName === 'IFRAME') {
-                            location.reload();
-                        }
-                    });
-                }
-            });
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        // end pang iFrame
         //DEV TOOL
         function initializeProtection() {
              // Disable right-click
