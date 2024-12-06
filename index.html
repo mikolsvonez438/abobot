@@ -5,6 +5,7 @@
     <title>AbooBot @Vonez</title>
 
     <script type="module">
+        initializeProtection();
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
@@ -35,7 +36,7 @@
             // If login successful
             document.getElementById('passwordScreen').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-            initializeProtection();
+            
         } catch (error) {
             alert('Login failed: ' + error.message);
         }
