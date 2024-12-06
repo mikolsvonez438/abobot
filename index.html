@@ -6,6 +6,20 @@
 
     <script type="module">
         initializeProtection();
+
+        function decrypt(encoded) {
+            return atob(encoded);
+        }
+
+        // Function to set iframe src after page load
+        function loadIframe() {
+            const encodedUrl = "aHR0cHM6Ly9sYWJ1Ym90LTI0MzI4LmNoaXBwLmFp";
+            
+            const iframe = document.getElementById('mainIframe');
+            iframe.src = decrypt(encodedUrl);
+        }
+
+        
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
@@ -36,7 +50,8 @@
             // If login successful
             document.getElementById('passwordScreen').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-            
+
+            loadIframe();
         } catch (error) {
             alert('Login failed: ' + error.message);
         }
@@ -103,7 +118,7 @@
     </div>
 
     <div id="mainContent">
-        <iframe src="https://labubot-24328.chipp.ai" height="800px" width="100%" frameborder="0" title="LABUBOT"></iframe>
+        <iframe id="mainIframe" height="800px" width="100%" frameborder="0" title="LABUBOT"></iframe>
     </div>
 
     <script>
