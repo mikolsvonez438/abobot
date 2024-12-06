@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>AbooBot @Vonez</title>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
     <style>
         #passwordScreen {
             position: fixed;
@@ -50,10 +52,13 @@
 <body>
     <div id="passwordScreen">
         <div class="password-container">
-            <h2>Enter Password</h2>
-            <input type="password" id="passwordInput" placeholder="Enter password">
+            <h2>Login</h2>
+            <input type="email" id="emailInput" placeholder="Email">
             <br>
-            <button onclick="checkPassword()">Submit</button>
+            <input type="password" id="passwordInput" placeholder="Password">
+            <br>
+            <button onclick="login()">Login</button>
+            <button onclick="signup()">Sign Up</button>
         </div>
     </div>
 
@@ -62,18 +67,49 @@
     </div>
 
     <script>
-        function checkPassword() {
+        // Replace with your Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyBhdMUWgFZWozxNefdbLg1WyEvKNllwq1g",
+        authDomain: "claude-sonnet-6a33b.firebaseapp.com",
+        projectId: "claude-sonnet-6a33b",
+        storageBucket: "claude-sonnet-6a33b.firebasestorage.app",
+        messagingSenderId: "383049109620",
+        appId: "1:383049109620:web:bfcea38981bcd24db94121",
+        measurementId: "G-Y5979YCZ85"
+  };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function login() {
+            const email = document.getElementById('emailInput').value;
             const password = document.getElementById('passwordInput').value;
-            if (password === 'SSD') { 
-                document.getElementById('passwordScreen').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                initializeProtection();
-            } else {
-                alert('Incorrect password!');
-                document.getElementById('passwordInput').value = '';
-            }
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Login successful
+                    document.getElementById('passwordScreen').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    initializeProtection();
+                })
+                .catch((error) => {
+                    alert('Login failed: ' + error.message);
+                });
         }
 
+        function signup() {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('Account created successfully! Please login.');
+                })
+                .catch((error) => {
+                    alert('Signup failed: ' + error.message);
+                });
+        }
+//DEV TOOL
         function initializeProtection() {
             // Your existing protection code
             document.addEventListener('keydown', (e) => {
@@ -118,6 +154,13 @@
         document.getElementById('passwordInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkPassword();
+            }
+        });
+    firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initializeProtection();
             }
         });
     </script>
